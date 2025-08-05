@@ -15,7 +15,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
-    var provider=Provider.of<MyProvider>(context,listen: false);
+    var provider = Provider.of<MyProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text("Registration Screen"),
@@ -107,8 +107,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   onPressed: () {
                     if (provider.globalKey.currentState!.validate()) {
-                        provider.setMyData();
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfileScreen(),));
+                      provider.setMyData();
+                      provider.clearController();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(),
+                        ),
+                      );
                     }
                   },
                   child: Text("Signup"),
@@ -119,13 +125,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Already have any account ? "),
-                  GestureDetector( onTap: () {
-                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
-                  }, child: Text("Login",style: TextStyle(fontWeight: FontWeight.bold),))
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
-              )
-
-
+              ),
             ],
           ),
         ),

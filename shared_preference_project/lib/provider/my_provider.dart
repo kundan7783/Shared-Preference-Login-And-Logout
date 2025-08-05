@@ -27,6 +27,7 @@ class MyProvider extends ChangeNotifier {
   // set data in shared preference
   Future<void> setMyData() async {
     await sharePre.setData(nameController.text.trim(), emailController.text.trim(), passwordController.text.trim(), phoneController.text.trim());
+    await  getMyData();
     notifyListeners();
   }
 
@@ -43,12 +44,6 @@ class MyProvider extends ChangeNotifier {
   // The user can login or logout
   loginAndLogout(bool status) async {
     await sharePre.checkLogAndLogout(status);
-    notifyListeners();
-  }
-
- // check user is login or logout
-  Future<void> checkLoginStatus() async {
-     await sharePre.isLoggedIn();
     notifyListeners();
   }
 
@@ -74,18 +69,24 @@ class MyProvider extends ChangeNotifier {
 
   // check application is login or not
   loginAndLogoutStatus(BuildContext context) async {
-    bool result= await sharePre.isLoggedIn();
-    if(result){
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ProfileScreen()),
-      );
-    }else{
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    }
+    bool success = await sharePre.isLoggedIn();
+     if (success) {
+       Navigator.pushAndRemoveUntil(
+         context, MaterialPageRoute(builder: (context) => ProfileScreen()), (
+           route) => false,
+       );
+     } else {
+       Navigator.pushAndRemoveUntil(
+         context, MaterialPageRoute(builder: (context) => LoginScreen()), (
+           route) => false,);
+     }
+  }
+
+  void clearController(){
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    phoneController.clear();
   }
 
 }

@@ -11,7 +11,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   void initState() {
     Provider.of<MyProvider>(context, listen: false).getMyData();
@@ -25,20 +24,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Text("Profile Screen"),
         backgroundColor: Colors.blue,
       ),
-      body: Consumer<MyProvider>(builder: (context, value, child) {
-        return Column(
-          children: [
-            Text(value.name),
-            Text(value.email),
-            Text(value.password),
-            Text(value.phone),
-            ElevatedButton(onPressed: () {
-              value.loginAndLogout(false);
-              Navigator.pushReplacement(context, MaterialPageRoute(builder:  (context) => LoginScreen(),));
-            }, child: Text("Logout"))
-          ],
-        );
-      },),
+      body: Consumer<MyProvider>(
+        builder: (context, value, child) {
+          return Column(
+            children: [
+              Text(value.name),
+              Text(value.email),
+              Text(value.password),
+              Text(value.phone),
+              ElevatedButton(
+                onPressed: () {
+                  value.loginAndLogout(false);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+                child: Text("Logout"),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
